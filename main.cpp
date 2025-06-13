@@ -29,16 +29,3 @@
         •⁠  ⁠⁠Tree
         •⁠  ⁠⁠Graph
 */
-
-#include <iostream>
-
-using namespace std;
-
-
-// Fitur ? 
-
-int main()
-{
-    cout << "Hello, World!" << endl;
-    return 0;
-} 
