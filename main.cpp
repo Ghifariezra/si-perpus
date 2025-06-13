@@ -41,11 +41,5 @@ void tambahBuku;
 int main()
 {
     cout << "Hello, World!" << endl;
-    cout << "Hello, World!" << endl;
-    cout << "Hello, World!" << endl;
-    cout << "Hello, World!" << endl;
-    cout << "Hello, World!" << endl;
-    cout << "Hello, World!" << endl;
-    cout << "kkkk" << endl;
     return 0;
 } 
