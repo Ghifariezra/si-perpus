@@ -74,6 +74,7 @@ void pinjamBuku();
 void pengembalianBuku();
 void rekomendasiBuku();
 void sortBuku();
+void test();
  
 int main() {
     return 0;
