@@ -29,8 +29,7 @@
         •⁠  ⁠⁠Tree
         •⁠  ⁠⁠Graph
 */
-<<<<<<< HEAD
-=======
+
 
 #include <iostream>
 
@@ -39,6 +38,8 @@ using namespace std;
 
 // Fitur ? 
 void tambahBuku;
+void tree;
+void graph;
 
 int main()
 {
