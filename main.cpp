@@ -36,6 +36,7 @@ using namespace std;
 
 
 // Fitur ? 
+void tambahBuku;
 
 int main()
 {
