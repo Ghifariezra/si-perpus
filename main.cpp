@@ -40,10 +40,9 @@ using namespace std;
 void tambahBuku;
 void tree;
 void graph;
-
+void stack
 int main()
 {
     cout << "Hello, World!" << endl;
     return 0;
 } 
->>>>>>> 4c8f58279d294ff60694d1953528db673c1b384c
