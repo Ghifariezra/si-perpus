@@ -65,15 +65,15 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+
 using namespace std;
 
 void daftarBuku();
 void cariBuku();
 void pinjamBuku();
 void pengembalianBuku();
-void riwayatPeminjaman();
-void riwayatPengembalian();
 void rekomendasiBuku();
+void sortBuku();
 
 int main() {
     return 0;
