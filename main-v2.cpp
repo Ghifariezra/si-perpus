@@ -75,6 +75,7 @@ void pengembalianBuku();
 void rekomendasiBuku();
 void sortBuku();
 void test();
+void A ();
  
 int main() {
     return 0;
