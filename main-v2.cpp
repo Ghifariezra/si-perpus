@@ -134,10 +134,14 @@ void pinjamBuku()
 
     do 
     {
-        cout << "=== Sistem Peminjaman Buku (Queue) ===" << endl;
+        cout << endl;
+        cout << "=================================" << endl;
+        cout << "======== Peminjaman Buku ========" << endl;
         cout << "1. Tambah Peminjam" << endl;
         cout << "2. Lihat Antrian" << endl;
         cout << "3. Keluar" << endl;
+        cout << "=================================" << endl;
+
         cout << "Pilih opsi: ";
         cin >> pilihan;
         cin.ignore();
@@ -145,22 +149,27 @@ void pinjamBuku()
         switch (pilihan) 
         {
             case 1:
+                cout  << endl;
                 cout << "Masukkan nama peminjam: ";
                 getline(cin, nama);
                 cout << "Masukkan judul buku yang dipinjam: ";
-                getline(cin, buku);
+                getline(cin, buku);    
+                cout << endl;
                 tambahPeminjam(Q, nama, buku);
+                cout << "Peminjam berhasil ditambahkan ke antrian:)" << endl;
                 break;
             case 2:
                 lihatAntrian(Q);
                 break;
             case 3:
-                cout << "Terima kasih telah menggunakan sistem ini.\n";
+                cout << endl;
+                cout << "Terima kasih telah meminjam di perpustakaan kami :)";
                 break;
             default:
                 cout << "Opsi tidak valid. Silakan pilih ulang.\n";
         }
-    } while (pilihan != 3); 
+    } 
+    while (pilihan != 3); 
 }
 
 void pengembalianBuku();
