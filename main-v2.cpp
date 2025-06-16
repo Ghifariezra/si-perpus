@@ -134,10 +134,10 @@ void pinjamBuku()
 
     do 
     {
-        cout << "=== Sistem Peminjaman Buku (Queue) ===";
-        cout << "1. Tambah Peminjam\n";
-        cout << "2. Lihat Antrian\n";
-        cout << "3. Keluar\n";
+        cout << "=== Sistem Peminjaman Buku (Queue) ===" << endl;
+        cout << "1. Tambah Peminjam" << endl;
+        cout << "2. Lihat Antrian" << endl;
+        cout << "3. Keluar" << endl;
         cout << "Pilih opsi: ";
         cin >> pilihan;
         cin.ignore();
@@ -170,6 +170,8 @@ void test();
 void B();
 void A ();
  
-int main() {
+int main() 
+{
+    pinjamBuku();
     return 0;
 }
