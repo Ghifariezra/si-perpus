@@ -373,10 +373,6 @@ void sortBuku()
 
     cout << string(115, '=') << endl;
 }
-
-void test();
-void B();
-void A();
  
 int main() 
 {
