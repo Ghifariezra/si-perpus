@@ -3,6 +3,7 @@
         "*.dbclient-js": "javascript",
         "*.ejs": "html",
         "iomanip": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iostream": "cpp"
     }
 }

@@ -197,7 +197,7 @@ void pinjamBuku()
                 break;
         }
     } 
-    while (pilihan != 3); 
+    while (pilihan > 0 && pilihan < 4); 
 }
 
 void pengembalianBuku() 
