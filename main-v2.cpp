@@ -177,7 +177,7 @@ void daftarBuku()
     stackBuku[++top] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
     stackBuku[++top] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
     stackBuku[++top] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
-    stackBuku[++top] = {"Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasi", "Tersedia", 3};
+    stackBuku[++top] = {"Harry Potter", "J.K. Rowling", "Fantasi", "Tersedia", 3};
     stackBuku[++top] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
 
     // input judul untuk dicari (SEARCHING)
@@ -378,11 +378,11 @@ void sortBuku()
     Buku daftarBuku[MAX_STACK];
     int jumlah = 5;
 
-    daftarBuku[0] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 20};
-    daftarBuku[1] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 75};
-    daftarBuku[2] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 40};
-    daftarBuku[3] = {"Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasi", "Tersedia", 35};
-    daftarBuku[4] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 18};
+    daftarBuku[0] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
+    daftarBuku[1] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
+    daftarBuku[2] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
+    daftarBuku[3] = {"Harry Potter ", "J.K. Rowling", "Fantasi", "Tersedia", 3};
+    daftarBuku[4] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
 
     // Bubble Sort berdasarkan stok
     for (int i = 0; i < jumlah - 1; i++)
