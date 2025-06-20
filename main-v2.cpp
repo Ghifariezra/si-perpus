@@ -168,8 +168,8 @@ void pinjamBuku()
         cout << "=================================" << endl;
         cout << "======== Peminjaman Buku ========" << endl;
         cout << "1. Tambah Peminjam" << endl;
-        cout << "2. Lihat Antrian" << endl;
-        cout << "3. Layani peminjam" << endl;
+        cout << "2. Layani peminjam" << endl;
+        cout << "3. Lihat Antrian" << endl;
         cout << "4. Kembali ke Menu Utama" << endl;
         cout << "=================================" << endl;
 
@@ -192,7 +192,6 @@ void pinjamBuku()
             case 2:
                 layaniPeminjam(Q);
                 break;
-
             case 3:
                 lihatAntrian(Q);
                 break;
