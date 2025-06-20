@@ -37,79 +37,112 @@
 using namespace std;
 
 // Queue dalam peminjaman buku
-typedef struct Node 
+typedef struct Node
 {
-    string Fnama;       //Pointer
-    string FjudulBuku; 
-    Node* Fnext; 
+    string Fnama; // Pointer
+    string FjudulBuku;
+    Node *Fnext;
 } Node;
 
-typedef struct Queue 
+typedef struct Queue
 {
-    Node* FFirst; 
-    Node* FLast;
+    Node *FFirst;
+    Node *FLast;
 } Queue;
 
-void initQueue(Queue &Q) 
+void initQueue(Queue &Q)
 {
     Q.FFirst = NULL;
     Q.FLast = NULL;
 }
 
-void tambahPeminjam(Queue &Q, string Fnama, string FjudulBuku);
-void layaniPeminjam(Queue &Q);
-void lihatAntrian(Queue Q);
-void daftarBuku();
-void cariBuku();
-void pinjamBuku();
-void pengembalianBuku();
-void rekomendasiBuku();
-void sortBuku();
- 
-int main() 
+void TambahPeminjam(Queue &Q, string Fnama, string FjudulBuku);
+void LayaniPeminjam(Queue &Q);
+void LihatAntrian(Queue Q);
+void CariBuku();
+bool KurangiStok(string judul);
+void PinjamBuku();
+void PengembalianBuku();
+void RekomendasiBuku();
+void DisplayBuku();
+
+const int MAX_STACK = 100;
+
+struct Buku
+{
+    string judul, penulis, genre, status;
+    int stock;
+};
+
+// Gunakan 1 array global
+Buku stackBuku[MAX_STACK];
+int top = -1;
+
+// Jumlah data buku
+int jumlahBuku = 0;
+
+void initDataBuku()
+{
+    if (jumlahBuku == 0)
+    { // hanya isi jika belum pernah diisi
+        stackBuku[++top] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
+        stackBuku[++top] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
+        stackBuku[++top] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
+        stackBuku[++top] = {"Harry Potter", "J.K. Rowling", "Fantasi", "Tersedia", 3};
+        stackBuku[++top] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
+        jumlahBuku = top + 1;
+    }
+}
+
+int main()
 {
     int pilihan;
-    do {
+
+    initDataBuku(); // Inisialisasi data buku
+    do
+    {
         cout << "\n=============================================\n";
         cout << "         SELAMAT DATANG DI PERPUSTAKAAN       \n";
         cout << "=============================================\n";
-        cout << "| 1. Daftar & Cari Buku                      |\n";
-        cout << "| 2. Peminjaman Buku                         |\n";
-        cout << "| 3. Pengembalian Buku                       |\n";
-        cout << "| 4. Urutkan Buku Berdasarkan Stok           |\n";
+        cout << "| 1. Daftar Buku                             |\n";
+        cout << "| 2. Cari Buku                               |\n";
+        cout << "| 3. Peminjaman Buku                         |\n";
+        cout << "| 4. Pengembalian Buku                       |\n";
         cout << "| 5. Keluar                                  |\n";
         cout << "=============================================\n";
         cout << "Pilih opsi: ";
         cin >> pilihan;
         cin.ignore();
 
-        switch (pilihan) 
+        switch (pilihan)
         {
-            case 1: 
-                cout << endl;
-                daftarBuku(); 
-                break;
-            case 2: 
-                cout << endl;
-                pinjamBuku(); 
-                break;
-            case 3: 
-                cout << endl;
-                pengembalianBuku();
-                break;
-            case 4:
-                cout << endl;
-                sortBuku();
-                break;
-            default: 
-                cout << "\nPilihan tidak valid. Silakan coba lagi.\n";
+        case 1:
+            cout << endl;
+            system("cls");
+            DisplayBuku();
+            break;
+        case 2:
+            cout << endl;
+            CariBuku();
+            break;
+        case 3:
+            cout << endl;
+            PinjamBuku();
+            break;
+        case 4:
+            cout << endl;
+            system("cls");
+            PengembalianBuku();
+            break;
+        default:
+            cout << "\nPilihan tidak valid. Silakan coba lagi.\n";
         }
-    } while (pilihan != 4);
-    
+    } while (pilihan > 0 && pilihan < 5);
+
     return 0;
 }
 
-void tambahPeminjam(Queue &Q, string Fnama, string FjudulBuku)
+void TambahPeminjam(Queue &Q, string Fnama, string FjudulBuku)
 {
     Node *Fbaru = new Node{Fnama, FjudulBuku, NULL};
     if (Q.FFirst == NULL)
@@ -124,7 +157,7 @@ void tambahPeminjam(Queue &Q, string Fnama, string FjudulBuku)
     }
 }
 
-void layaniPeminjam(Queue &Q)
+void LayaniPeminjam(Queue &Q)
 {
     if (Q.FFirst != NULL)
     {
@@ -142,7 +175,7 @@ void layaniPeminjam(Queue &Q)
     }
 }
 
-void lihatAntrian(Queue Q)
+void LihatAntrian(Queue Q)
 {
     Node *bantu = Q.FFirst;
     if (bantu == NULL)
@@ -160,26 +193,8 @@ void lihatAntrian(Queue Q)
     }
 }
 
-void daftarBuku()
+void CariBuku()
 {
-    sortBuku();
-    const int MAX_STACK = 100;
-    struct Buku
-    {
-        string judul, penulis, genre, status;
-        int stock;
-    };
-
-    Buku stackBuku[MAX_STACK];
-    int top = -1;
-
-    // input 3 data buku ke stack (STACK)
-    stackBuku[++top] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
-    stackBuku[++top] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
-    stackBuku[++top] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
-    stackBuku[++top] = {"Harry Potter", "J.K. Rowling", "Fantasi", "Tersedia", 3};
-    stackBuku[++top] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
-
     // input judul untuk dicari (SEARCHING)
     string cariJudul;
     cout << "Masukkan judul buku yang ingin dicari: ";
@@ -190,7 +205,9 @@ void daftarBuku()
     {
         if (stackBuku[i].judul == cariJudul)
         {
-            cout << "\n====== DETAIL BUKU ======\n";
+            system("cls");
+            cout << "\n===== BUKU DITEMUKAN ====\n";
+            cout << "====== DETAIL BUKU ======\n";
             cout << "Judul   : " << stackBuku[i].judul << endl;
             cout << "Penulis : " << stackBuku[i].penulis << endl;
             cout << "Genre   : " << stackBuku[i].genre << endl;
@@ -207,9 +224,31 @@ void daftarBuku()
     }
 }
 
-void cariBuku();
+bool KurangiStok(string judul)
+{
+    for (int i = 0; i <= top; i++)
+    {
+        if (stackBuku[i].judul == judul)
+        {
+            if (stackBuku[i].stock > 0)
+            {
+                stackBuku[i].stock--;
+                if (stackBuku[i].stock == 0)
+                    stackBuku[i].status = "Tidak Tersedia";
+                return true;
+            }
+            else
+            {
+                cout << "\nStok buku habis!\n";
+                return false;
+            }
+        }
+    }
+    cout << "Judul buku tidak ditemukan.\n";
+    return false;
+}
 
-void pinjamBuku()
+void PinjamBuku()
 {
     Queue Q;
     initQueue(Q);
@@ -240,21 +279,32 @@ void pinjamBuku()
             getline(cin, nama);
             cout << "Masukkan judul buku yang dipinjam: ";
             getline(cin, buku);
-            cout << endl;
-            tambahPeminjam(Q, nama, buku);
-            cout << "Peminjam berhasil ditambahkan ke antrian:)" << endl;
+
+            if (KurangiStok(buku))
+            {
+                TambahPeminjam(Q, nama, buku);
+                cout << "Peminjam berhasil ditambahkan ke antrian :)" << endl;
+            }
+            else
+            {
+                cout << "Gagal menambahkan ke antrian karena stok tidak tersedia.\n";
+            }
             break;
         case 2:
-            layaniPeminjam(Q);
+            LayaniPeminjam(Q);
             break;
         case 3:
-            lihatAntrian(Q);
+            LihatAntrian(Q);
+            break;
+        default:
+            system("cls");
             break;
         }
     } while (pilihan > 0 && pilihan < 4);
 }
 
-void pengembalianBuku()
+
+void PengembalianBuku()
 {
     const int MAX_STACK = 100;
 
@@ -264,6 +314,7 @@ void pengembalianBuku()
         string judul;
         string tanggal;
     };
+    
     // Stack
     Pengembalian stackKembali[MAX_STACK];
     int top = -1;
@@ -364,34 +415,18 @@ void pengembalianBuku()
     } while (pilihan != 4);
 }
 
-void rekomendasiBuku();
-void sortBuku()
+void RekomendasiBuku();
+
+void DisplayBuku()
 {
-    const int MAX_STACK = 100;
-
-    struct Buku
+    // Bubble Sort berdasarkan stok (descending)
+    for (int i = 0; i < jumlahBuku - 1; i++)
     {
-        string judul, penulis, genre, status;
-        int stock;
-    };
-
-    Buku daftarBuku[MAX_STACK];
-    int jumlah = 5;
-
-    daftarBuku[0] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
-    daftarBuku[1] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
-    daftarBuku[2] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
-    daftarBuku[3] = {"Harry Potter ", "J.K. Rowling", "Fantasi", "Tersedia", 3};
-    daftarBuku[4] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
-
-    // Bubble Sort berdasarkan stok
-    for (int i = 0; i < jumlah - 1; i++)
-    {
-        for (int j = 0; j < jumlah - i - 1; j++)
+        for (int j = 0; j < jumlahBuku - i - 1; j++)
         {
-            if (daftarBuku[j].stock < daftarBuku[j + 1].stock)
+            if (stackBuku[j].stock < stackBuku[j + 1].stock)
             {
-                swap(daftarBuku[j], daftarBuku[j + 1]);
+                swap(stackBuku[j], stackBuku[j + 1]);
             }
         }
     }
@@ -411,9 +446,9 @@ void sortBuku()
 
     cout << string(115, '-') << endl;
 
-    for (int i = 0; i < jumlah; i++)
+    for (int i = 0; i < jumlahBuku; i++)
     {
-        string judulFix = daftarBuku[i].judul;
+        string judulFix = stackBuku[i].judul;
         if (judulFix.length() > 35)
         {
             judulFix = judulFix.substr(0, 32) + "...";
@@ -421,10 +456,10 @@ void sortBuku()
 
         cout << "| " << setw(4) << i + 1
              << "| " << setw(35) << judulFix
-             << "| " << setw(20) << daftarBuku[i].penulis
-             << "| " << setw(20) << daftarBuku[i].genre
-             << "| " << setw(17) << daftarBuku[i].status
-             << "| " << setw(5) << daftarBuku[i].stock
+             << "| " << setw(20) << stackBuku[i].penulis
+             << "| " << setw(20) << stackBuku[i].genre
+             << "| " << setw(17) << stackBuku[i].status
+             << "| " << setw(5) << stackBuku[i].stock
              << " |" << endl;
     }
 

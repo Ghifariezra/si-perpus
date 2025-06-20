@@ -4,6 +4,7 @@
         "*.ejs": "html",
         "iomanip": "cpp",
         "string": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp"
     }
 }
