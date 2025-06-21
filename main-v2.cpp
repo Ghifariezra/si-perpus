@@ -36,6 +36,19 @@
 
 using namespace std;
 
+const int MAX_STACK = 100;
+int top = -1;
+// Jumlah data buku
+int jumlahBuku = 0;
+
+struct BNode
+{
+    string key;
+    int bookId;
+    BNode *left;
+    BNode *right;
+};
+
 // Queue dalam peminjaman buku
 typedef struct Node
 {
@@ -56,6 +69,61 @@ void initQueue(Queue &Q)
     Q.FLast = NULL;
 }
 
+struct Buku
+{
+    int id;
+    string judul, penulis, genre, status;
+    int stock;
+};
+
+// Gunakan 1 array global
+Buku stackBuku[MAX_STACK];
+BNode *rootBTree = nullptr;
+
+// Fungsi untuk mencari buku berdasarkan ID
+int findBookIndexById(int bookId)
+{
+    for (int i = 0; i < jumlahBuku; i++)
+    {
+        if (stackBuku[i].id == bookId)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Update fungsi insert BST
+BNode *insertBTree(BNode *root, string key, int bookId)
+{
+    if (root == nullptr)
+    {
+        BNode *newNode = new BNode{key, bookId, nullptr, nullptr};
+        return newNode;
+    }
+    if (key < root->key)
+    {
+        root->left = insertBTree(root->left, key, bookId);
+    }
+    else if (key > root->key)
+    {
+        root->right = insertBTree(root->right, key, bookId);
+    }
+    return root;
+}
+
+// Update fungsi search BST
+int searchBTree(BNode *root, string key)
+{
+    if (root == nullptr)
+        return -1;
+    if (root->key == key)
+        return findBookIndexById(root->bookId); // Cari index berdasarkan ID
+    if (key < root->key)
+        return searchBTree(root->left, key);
+    return searchBTree(root->right, key);
+}
+
 void TambahPeminjam(Queue &Q, string Fnama, string FjudulBuku);
 void LayaniPeminjam(Queue &Q);
 void LihatAntrian(Queue Q);
@@ -66,34 +134,28 @@ void PengembalianBuku();
 void RekomendasiBuku();
 void DisplayBuku();
 
-const int MAX_STACK = 100;
-
-struct Buku
-{
-    string judul, penulis, genre, status;
-    int stock;
-};
-
-// Gunakan 1 array global
-Buku stackBuku[MAX_STACK];
-int top = -1;
-
-// Jumlah data buku
-int jumlahBuku = 0;
-
 void initDataBuku()
 {
     if (jumlahBuku == 0)
-    { // hanya isi jika belum pernah diisi
-        stackBuku[++top] = {"The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
-        stackBuku[++top] = {"Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
-        stackBuku[++top] = {"Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
-        stackBuku[++top] = {"Harry Potter", "J.K. Rowling", "Fantasi", "Tersedia", 3};
-        stackBuku[++top] = {"Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
+    {
+        stackBuku[++top] = {1, "The Psychology of Money", "Morgan Housel", "Psikologi Finansial", "Tersedia", 2};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
+        stackBuku[++top] = {2, "Laut Bercerita", "Leila S. Chudori", "Novel Sosial", "Tersedia", 5};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
+        stackBuku[++top] = {3, "Dilan 1990", "Pidi Baiq", "Romantis", "Tidak Tersedia", 0};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
+        stackBuku[++top] = {4, "Harry Potter", "J.K. Rowling", "Fantasi", "Tersedia", 3};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
+        stackBuku[++top] = {5, "Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
         jumlahBuku = top + 1;
     }
 }
-
 int main()
 {
     int pilihan;
@@ -193,36 +255,26 @@ void LihatAntrian(Queue Q)
     }
 }
 
-void CariBuku()
-{
-    // input judul untuk dicari (SEARCHING)
+void CariBuku() {
     string cariJudul;
     cout << "Masukkan judul buku yang ingin dicari: ";
     getline(cin, cariJudul);
 
-    bool ditemukan = false;
-    for (int i = 0; i <= top; i++)
-    {
-        if (stackBuku[i].judul == cariJudul)
-        {
-            system("cls");
-            cout << "\n===== BUKU DITEMUKAN ====\n";
-            cout << "====== DETAIL BUKU ======\n";
-            cout << "Judul   : " << stackBuku[i].judul << endl;
-            cout << "Penulis : " << stackBuku[i].penulis << endl;
-            cout << "Genre   : " << stackBuku[i].genre << endl;
-            cout << "Status  : " << stackBuku[i].status << endl;
-            cout << "Stock   : " << stackBuku[i].stock << endl;
-            ditemukan = true;
-            break;
-        }
-    }
-
-    if (!ditemukan)
-    {
+    int index = searchBTree(rootBTree, cariJudul);
+    if (index != -1) {
+        system("cls");
+        cout << "\n===== BUKU DITEMUKAN ====\n";
+        cout << "====== DETAIL BUKU ======\n";
+        cout << "Judul   : " << stackBuku[index].judul << endl;
+        cout << "Penulis : " << stackBuku[index].penulis << endl;
+        cout << "Genre   : " << stackBuku[index].genre << endl;
+        cout << "Status  : " << stackBuku[index].status << endl;
+        cout << "Stock   : " << stackBuku[index].stock << endl;
+    } else {
         cout << "\nBuku tidak tersedia.\n";
     }
 }
+
 
 bool KurangiStok(string judul)
 {
@@ -302,7 +354,6 @@ void PinjamBuku()
         }
     } while (pilihan > 0 && pilihan < 4);
 }
-
 
 void PengembalianBuku()
 {
