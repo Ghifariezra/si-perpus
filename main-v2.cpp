@@ -468,20 +468,29 @@ void PengembalianBuku()
 
 void RekomendasiBuku();
 
+// ===== ALTERNATIF SOLUSI 2: Gunakan copy array untuk sorting =====
 void DisplayBuku()
 {
-    // Bubble Sort berdasarkan stok (descending)
+    // Buat copy array untuk sorting, jangan sort array asli
+    Buku tempBuku[MAX_STACK];
+    for (int i = 0; i < jumlahBuku; i++)
+    {
+        tempBuku[i] = stackBuku[i];
+    }
+
+    // Bubble Sort pada array copy
     for (int i = 0; i < jumlahBuku - 1; i++)
     {
         for (int j = 0; j < jumlahBuku - i - 1; j++)
         {
-            if (stackBuku[j].stock < stackBuku[j + 1].stock)
+            if (tempBuku[j].stock < tempBuku[j + 1].stock)
             {
-                swap(stackBuku[j], stackBuku[j + 1]);
+                swap(tempBuku[j], tempBuku[j + 1]);
             }
         }
     }
 
+    // Display menggunakan array yang sudah di-sort
     cout << string(115, '=') << endl;
     cout << setw(80) << right << "Daftar Buku Setelah Diurutkan (Stok Terbanyak)" << endl;
     cout << string(115, '=') << endl;
@@ -499,7 +508,7 @@ void DisplayBuku()
 
     for (int i = 0; i < jumlahBuku; i++)
     {
-        string judulFix = stackBuku[i].judul;
+        string judulFix = tempBuku[i].judul;
         if (judulFix.length() > 35)
         {
             judulFix = judulFix.substr(0, 32) + "...";
@@ -507,10 +516,10 @@ void DisplayBuku()
 
         cout << "| " << setw(4) << i + 1
              << "| " << setw(35) << judulFix
-             << "| " << setw(20) << stackBuku[i].penulis
-             << "| " << setw(20) << stackBuku[i].genre
-             << "| " << setw(17) << stackBuku[i].status
-             << "| " << setw(5) << stackBuku[i].stock
+             << "| " << setw(20) << tempBuku[i].penulis
+             << "| " << setw(20) << tempBuku[i].genre
+             << "| " << setw(17) << tempBuku[i].status
+             << "| " << setw(5) << tempBuku[i].stock
              << " |" << endl;
     }
 
