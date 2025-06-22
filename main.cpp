@@ -39,7 +39,6 @@ using namespace std;
 const int MAX_STACK = 100;
 
 int top = -1;
-// Jumlah data buku
 int jumlahBuku = 0;
 
 struct BNode
@@ -154,14 +153,78 @@ void initDataBuku()
         stackBuku[++top] = {5, "Danur", "Risa Saraswati", "Horor", "Tersedia", 1};
         rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
 
+        stackBuku[++top] = {6, "Mata Malaikat", "Risa Saraswati", "Horor", "Tersedia", 4};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
+        stackBuku[++top] = {7, "KKN di Desa Penari", "SimpleMan", "Horor", "Tersedia", 3};
+        rootBTree = insertBTree(rootBTree, stackBuku[top].judul, stackBuku[top].id);
+
         jumlahBuku = top + 1;
     }
 }
+
+const int MAX_BUKU = 100;
+int adjMatrix[MAX_BUKU][MAX_BUKU]; // Adjacency matrix untuk graph
+
+void buildGraph()
+{
+    for (int i = 0; i < jumlahBuku; i++)
+    {
+        for (int j = 0; j < jumlahBuku; j++)
+        {
+            if (i != j && stackBuku[i].genre == stackBuku[j].genre)
+            {
+                adjMatrix[i][j] = 1;
+            }
+            else
+            {
+                adjMatrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+void DFS(int index, bool visited[], int asal)
+{
+    visited[index] = true;
+    if (index != asal)
+    { // Hindari menampilkan buku asal
+        cout << "- " << stackBuku[index].judul << " oleh " << stackBuku[index].penulis << endl;
+    }
+
+    for (int i = 0; i < jumlahBuku; i++)
+    {
+        if (adjMatrix[index][i] == 1 && !visited[i])
+        {
+            DFS(i, visited, asal);
+        }
+    }
+}
+
+void RekomendasiBuku()
+{
+    string inputJudul;
+    cout << "Masukkan judul buku untuk rekomendasi: ";
+    getline(cin, inputJudul);
+
+    int index = searchBTree(rootBTree, inputJudul);
+    if (index == -1)
+    {
+        cout << "Buku tidak ditemukan.\n";
+        return;
+    }
+
+    cout << "\nRekomendasi buku berdasarkan genre '" << stackBuku[index].genre << "':\n";
+    bool visited[MAX_BUKU] = {false};
+    DFS(index, visited, index);
+}
+
 int main()
 {
     int pilihan;
 
     initDataBuku(); // Inisialisasi data buku
+    buildGraph();   // Bangun graph berdasarkan genre
     do
     {
         cout << "\n=============================================\n";
@@ -171,7 +234,8 @@ int main()
         cout << "| 2. Cari Buku                               |\n";
         cout << "| 3. Peminjaman Buku                         |\n";
         cout << "| 4. Pengembalian Buku                       |\n";
-        cout << "| 5. Keluar                                  |\n";
+        cout << "| 5. Rekomendasi Buku                        |\n";
+        cout << "| 6. Keluar                                  |\n";
         cout << "=============================================\n";
         cout << "Pilih opsi: ";
         cin >> pilihan;
@@ -197,10 +261,15 @@ int main()
             system("cls");
             PengembalianBuku();
             break;
+        case 5:
+            cout << endl;
+            // cin.ignore(); // Buang newline sebelumnya
+            RekomendasiBuku();
+            break;
         default:
             cout << "\nPilihan tidak valid. Silakan coba lagi.\n";
         }
-    } while (pilihan > 0 && pilihan < 5);
+    } while (pilihan > 0 && pilihan < 6);
 
     return 0;
 }
