@@ -14,9 +14,8 @@
         Fatimah:
             • Sorting
             • Queue
-        Fatimah & Maghfiroh:
-            • Searching
         Ghifari:
+            • Searching
             • Tree
             • Graph
 
