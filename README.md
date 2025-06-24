@@ -38,12 +38,15 @@
 
 using namespace std;
 
-void daftarBuku();
-void cariBuku();
-void pinjamBuku();
-void pengembalianBuku();
-void rekomendasiBuku();
-void sortBuku();
+void TambahPeminjam(Queue &Q, string Fnama, string FjudulBuku);
+void LayaniPeminjam(Queue &Q);
+void LihatAntrian(Queue Q);
+void CariBuku();
+bool KurangiStok(string judul);
+void PinjamBuku();
+void PengembalianBuku();
+void RekomendasiBuku();
+void DisplayBuku();
 
 int main() {
     return 0;
