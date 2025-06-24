@@ -265,6 +265,10 @@ int main()
             // cin.ignore(); // Buang newline sebelumnya
             RekomendasiBuku();
             break;
+        case 6:
+            cout << endl;
+            cout << "Terima kasih telah menggunakan perpustakaan :D";
+            break;
         default:
             cout << "\nPilihan tidak valid. Silakan coba lagi.\n";
         }
