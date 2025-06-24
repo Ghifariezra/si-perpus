@@ -186,10 +186,8 @@ void buildGraph()
 void DFS(int index, bool visited[], int asal)
 {
     visited[index] = true;
-    if (index != asal)
-    { // Hindari menampilkan buku asal
-        cout << "- " << stackBuku[index].judul << " oleh " << stackBuku[index].penulis << endl;
-    }
+    
+    cout << "- " << stackBuku[index].judul << " oleh " << stackBuku[index].penulis << endl;
 
     for (int i = 0; i < jumlahBuku; i++)
     {
