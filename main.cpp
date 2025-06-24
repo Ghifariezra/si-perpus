@@ -202,20 +202,30 @@ void DFS(int index, bool visited[], int asal)
 
 void RekomendasiBuku()
 {
-    string inputJudul;
-    cout << "Masukkan judul buku untuk rekomendasi: ";
-    getline(cin, inputJudul);
+    string inputGenre;
+    cout << "Masukkan genre buku untuk rekomendasi: ";
+    getline(cin, inputGenre);
 
-    int index = searchBTree(rootBTree, inputJudul);
-    if (index == -1)
+    // Cari satu buku yang memiliki genre tersebut untuk mulai DFS
+    int startIndex = -1;
+    for (int i = 0; i < jumlahBuku; i++)
     {
-        cout << "Buku tidak ditemukan.\n";
+        if (stackBuku[i].genre == inputGenre)
+        {
+            startIndex = i;
+            break;
+        }
+    }
+
+    if (startIndex == -1)
+    {
+        cout << "\nGenre '" << inputGenre << "' tidak ditemukan dalam daftar buku.\n";
         return;
     }
 
-    cout << "\nRekomendasi buku berdasarkan genre '" << stackBuku[index].genre << "':\n";
+    cout << "\nRekomendasi buku berdasarkan genre '" << inputGenre << "':\n";
     bool visited[MAX_BUKU] = {false};
-    DFS(index, visited, index);
+    DFS(startIndex, visited, startIndex);
 }
 
 int main()
