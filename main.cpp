@@ -600,7 +600,7 @@ void DisplayBuku()
          << "| " << setw(20) << "Genre"
          << "| " << setw(17) << "Status"
          << "| " << setw(5) << "Stok"
-         << " |" << endl;
+         << "|" << endl;
 
     cout << string(115, '-') << endl;
 
@@ -618,7 +618,7 @@ void DisplayBuku()
              << "| " << setw(20) << tempBuku[i].genre
              << "| " << setw(17) << tempBuku[i].status
              << "| " << setw(5) << tempBuku[i].stock
-             << " |" << endl;
+             << "|" << endl;
     }
 
     cout << string(115, '=') << endl;
